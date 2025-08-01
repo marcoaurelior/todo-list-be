@@ -7,15 +7,17 @@ import com.marco.todo_list.application.service.TaskService
 import com.marco.todo_list.domain.Task
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
+import java.math.BigDecimal
+import java.time.LocalDate
 
 @Service
 class TaskServiceImpl(private val repository: TaskRepository) : TaskService {
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    override fun create(task: Task): Task {
-        task.name?.let { validateIfExistsByName(it) }
+    override fun create(name: String, cost: BigDecimal, dueDate: LocalDate): Task {
+        validateIfExistsByName(name)
         val maxDisplayOrder = repository.findMaxDisplayOrder() ?: -1
-        val newTask = task.copy(displayOrder = maxDisplayOrder + 1)
+        val newTask = Task(name, cost, dueDate, maxDisplayOrder + 1)
 
         logger.info("createTask=$newTask")
         return Task.create(newTask, repository)
@@ -28,10 +30,24 @@ class TaskServiceImpl(private val repository: TaskRepository) : TaskService {
     override fun findAll(): List<Task> =
         repository.findAll()
 
-    override fun update(task: Task): Task {
-        logger.info("updateTask=$task")
-        task.name?.let { validateIfExistsByName(it, task.id) }
-        return findOne(task.id).update(task, repository)
+    override fun update(id: String, name: String, cost: BigDecimal, dueDate: LocalDate): Task {
+        logger.info("updateTask=${id}")
+        validateIfExistsByName(name, id)
+
+        val existingTask = findOne(id)
+        val updatedTask = Task(name, cost, dueDate, existingTask.displayOrder)
+
+        return findOne(id).update(updatedTask, repository)
+    }
+
+    override fun updateAllDisplayOrder(newTasks: List<TaskOrder>): List<Task> {
+        val currentTasks = repository.findAll()
+        val updatedTasks = currentTasks.map { task ->
+            task.copy(displayOrder = newTasks.first { it.id == task.id }.displayOrder)
+        }
+
+        logger.info("updateAllTasks=$updatedTasks")
+        return Task.updateAllDisplayOrder(updatedTasks, repository)
     }
 
     override fun deleteTask(id: String) {
@@ -48,7 +64,12 @@ class TaskServiceImpl(private val repository: TaskRepository) : TaskService {
         }
 
         if (exists) {
-            throw AlreadyExistsException("A task with this name already exists")
+            throw AlreadyExistsException("A task with name $name already exists")
         }
     }
 }
+
+data class TaskOrder(
+    val id: String,
+    val displayOrder: Int
+)

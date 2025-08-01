@@ -10,17 +10,22 @@ import java.time.LocalDate
 
 @Entity
 data class Task(
-    @Id val id: String = UuidCreator.getTimeOrderedEpoch().toString(),
 
-    var name: String? = null,
-    var cost: BigDecimal? = null,
-    var dueDate: LocalDate? = null,
-    var displayOrder: Int? = null
+    var name: String,
+    var cost: BigDecimal,
+    var dueDate: LocalDate,
+    var displayOrder: Int,
+
+    @Id val id: String = UuidCreator.getTimeOrderedEpoch().toString()
 ) {
 
     companion object {
         fun create(task: Task, repository: TaskRepository): Task {
             return repository.save(task)
+        }
+
+        fun updateAllDisplayOrder(tasks: List<Task>, repository: TaskRepository): List<Task> {
+            return repository.saveAll(tasks)
         }
     }
 

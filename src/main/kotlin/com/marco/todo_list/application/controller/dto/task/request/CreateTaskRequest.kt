@@ -1,6 +1,5 @@
 package com.marco.todo_list.application.controller.dto.task.request
 
-import com.marco.todo_list.domain.Task
 import jakarta.validation.constraints.DecimalMin
 import jakarta.validation.constraints.FutureOrPresent
 import jakarta.validation.constraints.NotNull
@@ -19,13 +18,4 @@ data class CreateTaskRequest(
     @field:NotNull(message = "{validation.required}")
     @field:FutureOrPresent(message = "{validation.futureOrPresent}")
     val dueDate: LocalDate,
-
-    ) {
-    fun toModel(): Task {
-        return Task(
-            name = name,
-            cost = cost,
-            dueDate = dueDate,
-        )
-    }
-}
+    )

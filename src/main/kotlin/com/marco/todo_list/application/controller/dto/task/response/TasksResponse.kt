@@ -9,6 +9,7 @@ data class TasksResponse(
     val name: String?,
     val cost: BigDecimal?,
     val dueDate: LocalDate?,
+    val displayOrder: Int?
 ) {
     companion object {
         fun fromModel(task: Task) = TasksResponse(
@@ -16,6 +17,7 @@ data class TasksResponse(
             name = task.name,
             cost = task.cost,
             dueDate = task.dueDate,
+            displayOrder = task.displayOrder
         )
 
         fun fromModelList(tasks: List<Task>) = tasks.map { fromModel(it) }

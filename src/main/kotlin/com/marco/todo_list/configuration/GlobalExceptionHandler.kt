@@ -5,8 +5,7 @@ import com.marco.todo_list.application.exceptions.AlreadyExistsException
 import com.marco.todo_list.application.exceptions.NotFoundException
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
-import org.springframework.http.HttpStatus.NOT_FOUND
-import org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY
+import org.springframework.http.HttpStatus.*
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -27,6 +26,12 @@ class GlobalExceptionHandler {
     @ExceptionHandler(AlreadyExistsException::class)
     fun handleAlreadyExistsException(ex: AlreadyExistsException, request: WebRequest): ResponseEntity<Any> {
         val apiError = ApiError(UNPROCESSABLE_ENTITY, "Already Exists", "Already Exists")
+        return ResponseEntity(apiError, HttpHeaders(), apiError.status)
+    }
+
+    @ExceptionHandler(Exception::class)
+    fun unhandledExceptions(ex: Exception, request: WebRequest): ResponseEntity<Any> {
+        val apiError = ApiError(INTERNAL_SERVER_ERROR, "Internal Server Error, try later", "Internal Server Error")
         return ResponseEntity(apiError, HttpHeaders(), apiError.status)
     }
 }
