@@ -7,4 +7,7 @@ import org.springframework.data.jpa.repository.Query
 interface TaskRepository : JpaRepository<Task, String> {
     @Query("SELECT MAX(task.displayOrder) FROM Task task")
     fun findMaxDisplayOrder(): Int?
+
+    fun existsByName(name: String): Boolean
+    fun existsByNameAndIdNot(name: String, id: String): Boolean
 }
