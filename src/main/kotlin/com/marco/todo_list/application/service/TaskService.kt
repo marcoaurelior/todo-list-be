@@ -7,4 +7,5 @@ interface TaskService {
     fun findOne(id: String): Task
     fun findAll(): List<Task>
     fun update(task: Task): Task
+    fun deleteTask(id: String)
 }

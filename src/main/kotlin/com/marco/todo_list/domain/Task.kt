@@ -31,6 +31,10 @@ data class Task(
         return repository.save(this)
     }
 
+    fun delete(repository: TaskRepository) {
+        repository.delete(this)
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null || Hibernate.getClass(this) != Hibernate.getClass(other)) return false

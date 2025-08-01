@@ -31,4 +31,9 @@ class TaskServiceImpl(private val repository: TaskRepository) : TaskService {
         return findOne(task.id).update(task, repository)
     }
 
+    override fun deleteTask(id: String) {
+        logger.info("deleting task $id")
+        val task = findOne(id)
+        task.delete(repository)
+    }
 }

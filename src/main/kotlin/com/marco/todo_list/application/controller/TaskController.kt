@@ -6,6 +6,7 @@ import com.marco.todo_list.application.controller.dto.task.response.TasksRespons
 import com.marco.todo_list.application.service.TaskService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus.CREATED
+import org.springframework.http.HttpStatus.NO_CONTENT
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -15,7 +16,7 @@ class TaskController(
 ) {
     @ResponseStatus(CREATED)
     @PostMapping
-    fun createProduct(
+    fun createTask(
         @RequestBody @Valid request: CreateTaskRequest
     ): TasksResponse {
         val task = taskService.create(request.toModel())
@@ -42,5 +43,11 @@ class TaskController(
         val updatedTask = taskService.update(taskToUpdate)
 
         return TasksResponse.fromModel(updatedTask)
+    }
+
+    @ResponseStatus(NO_CONTENT)
+    @DeleteMapping("/{id}")
+    fun deleteTask(@PathVariable id: String) {
+        taskService.deleteTask(id)
     }
 }
