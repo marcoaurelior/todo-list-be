@@ -22,4 +22,7 @@ class TaskServiceImpl(private val repository: TaskRepository) : TaskService {
     override fun findOne(id: String): Task =
         repository.findById(id)
             .orElseThrow { NotFoundException("Task not found with id: $id") }
+
+    override fun findAll(): List<Task> =
+        repository.findAll()
 }

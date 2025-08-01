@@ -14,5 +14,7 @@ data class TasksResponse(
             name = task.name,
             dueDate = task.dueDate,
         )
+
+        fun fromModelList(tasks: List<Task>) = tasks.map { fromModel(it) }
     }
 }

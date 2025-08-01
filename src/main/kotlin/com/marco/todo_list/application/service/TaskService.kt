@@ -5,4 +5,5 @@ import com.marco.todo_list.domain.Task
 interface TaskService {
     fun create(task: Task): Task
     fun findOne(id: String): Task
+    fun findAll(): List<Task>
 }

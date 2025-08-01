@@ -27,4 +27,11 @@ class TaskController(
             taskService.findOne(id)
         )
     }
+
+    @GetMapping("/all")
+    fun findAll(): List<TasksResponse> {
+        return TasksResponse.fromModelList(
+            taskService.findAll()
+        )
+    }
 }
