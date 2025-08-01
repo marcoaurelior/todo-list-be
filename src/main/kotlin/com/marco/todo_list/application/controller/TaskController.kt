@@ -1,6 +1,7 @@
 package com.marco.todo_list.application.controller
 
 import com.marco.todo_list.application.controller.dto.task.request.CreateTaskRequest
+import com.marco.todo_list.application.controller.dto.task.request.UpdateTaskRequest
 import com.marco.todo_list.application.controller.dto.task.response.TasksResponse
 import com.marco.todo_list.application.service.TaskService
 import jakarta.validation.Valid
@@ -33,5 +34,13 @@ class TaskController(
         return TasksResponse.fromModelList(
             taskService.findAll()
         )
+    }
+
+    @PutMapping("/{id}")
+    fun edit(@RequestBody @Valid taskRequest: UpdateTaskRequest, @PathVariable id: String): TasksResponse {
+        val taskToUpdate = taskRequest.toModel(id)
+        val updatedTask = taskService.update(taskToUpdate)
+
+        return TasksResponse.fromModel(updatedTask)
     }
 }

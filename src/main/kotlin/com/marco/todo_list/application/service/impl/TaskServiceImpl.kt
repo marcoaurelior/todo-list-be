@@ -25,4 +25,10 @@ class TaskServiceImpl(private val repository: TaskRepository) : TaskService {
 
     override fun findAll(): List<Task> =
         repository.findAll()
+
+    override fun update(task: Task): Task {
+        logger.info("updateTask=$task")
+        return findOne(task.id).update(task, repository)
+    }
+
 }

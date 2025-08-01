@@ -24,6 +24,13 @@ data class Task(
         }
     }
 
+    fun update(task: Task, repository: TaskRepository): Task {
+        this.name = task.name
+        this.cost = task.cost
+        this.dueDate = task.dueDate
+        return repository.save(this)
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null || Hibernate.getClass(this) != Hibernate.getClass(other)) return false
