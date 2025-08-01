@@ -1,0 +1,7 @@
+package com.marco.todo_list.application.service
+
+import com.marco.todo_list.domain.Task
+
+interface TaskService {
+    fun create(task: Task): Task
+}

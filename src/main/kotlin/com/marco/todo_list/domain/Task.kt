@@ -1,6 +1,7 @@
 package com.marco.todo_list.domain
 
 import com.github.f4b6a3.uuid.UuidCreator
+import com.marco.todo_list.application.repository.TaskRepository
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
 import org.hibernate.Hibernate
@@ -16,6 +17,12 @@ data class Task(
     var dueDate: LocalDate? = null,
     var displayOrder: Int? = null
 ) {
+
+    companion object {
+        fun create(task: Task, repository: TaskRepository): Task {
+            return repository.save(task)
+        }
+    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
