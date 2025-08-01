@@ -1,5 +1,6 @@
 package com.marco.todo_list.application.service.impl
 
+import com.marco.todo_list.application.exceptions.NotFoundException
 import com.marco.todo_list.application.repository.TaskRepository
 import com.marco.todo_list.application.service.TaskService
 import com.marco.todo_list.domain.Task
@@ -17,4 +18,8 @@ class TaskServiceImpl(private val repository: TaskRepository) : TaskService {
         logger.info("createTask=$newTask")
         return Task.create(newTask, repository)
     }
+
+    override fun findOne(id: String): Task =
+        repository.findById(id)
+            .orElseThrow { NotFoundException("Task not found with id: $id") }
 }

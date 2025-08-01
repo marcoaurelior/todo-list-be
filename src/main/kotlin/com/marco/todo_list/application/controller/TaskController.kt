@@ -20,4 +20,11 @@ class TaskController(
         val task = taskService.create(request.toModel())
         return TasksResponse.fromModel(task)
     }
+
+    @GetMapping("/{id}")
+    fun findOne(@PathVariable id: String): TasksResponse {
+        return TasksResponse.fromModel(
+            taskService.findOne(id)
+        )
+    }
 }
