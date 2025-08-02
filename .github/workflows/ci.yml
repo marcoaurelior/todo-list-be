@@ -16,3 +16,14 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v2
+
+      - name: Verify Docker is running
+        run: docker info
+
+      - name: Build and Test with Maven
+        env:
+          TESTCONTAINERS_RYUK_DISABLED: "true"
+        run: mvn clean install
