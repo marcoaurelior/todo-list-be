@@ -3,6 +3,7 @@ package com.marco.todo_list.configuration
 import com.marco.todo_list.application.controller.dto.exception.ApiError
 import com.marco.todo_list.application.exceptions.AlreadyExistsException
 import com.marco.todo_list.application.exceptions.NotFoundException
+import com.marco.todo_list.application.exceptions.PastDueDateException
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus.*
@@ -34,4 +35,11 @@ class GlobalExceptionHandler {
         val apiError = ApiError(INTERNAL_SERVER_ERROR, "Internal Server Error, try later", "Internal Server Error")
         return ResponseEntity(apiError, HttpHeaders(), apiError.status)
     }
+
+    @ExceptionHandler(PastDueDateException::class)
+    fun handlePastDateException(ex: PastDueDateException, request: WebRequest): ResponseEntity<Any> {
+        val apiError = ApiError(BAD_REQUEST, "Invalid due date", ex.message ?: "Due date cannot be in the past")
+        return ResponseEntity(apiError, HttpHeaders(), apiError.status)
+    }
+
 }

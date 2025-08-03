@@ -16,6 +16,5 @@ data class CreateTaskRequest(
     val cost: BigDecimal,
 
     @field:NotNull(message = "{validation.required}")
-    @field:FutureOrPresent(message = "{validation.futureOrPresent}")
     val dueDate: LocalDate,
     )

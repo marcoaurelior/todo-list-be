@@ -2,6 +2,7 @@ package com.marco.todo_list.application.service.impl
 
 import com.marco.todo_list.application.exceptions.AlreadyExistsException
 import com.marco.todo_list.application.exceptions.NotFoundException
+import com.marco.todo_list.application.exceptions.PastDueDateException
 import com.marco.todo_list.application.repository.TaskRepository
 import com.marco.todo_list.application.service.TaskService
 import com.marco.todo_list.domain.Task
@@ -16,6 +17,7 @@ class TaskServiceImpl(private val repository: TaskRepository) : TaskService {
 
     override fun create(name: String, cost: BigDecimal, dueDate: LocalDate): Task {
         validateIfExistsByName(name)
+        validateIfDueDateIsInThePast(dueDate)
         val maxDisplayOrder = repository.findMaxDisplayOrder() ?: -1
         val newTask = Task(name, cost, dueDate, maxDisplayOrder + 1)
 
@@ -33,6 +35,7 @@ class TaskServiceImpl(private val repository: TaskRepository) : TaskService {
     override fun update(id: String, name: String, cost: BigDecimal, dueDate: LocalDate): Task {
         logger.info("updateTask=${id}")
         validateIfExistsByName(name, id)
+        validateIfDueDateIsInThePast(dueDate)
 
         val existingTask = findOne(id)
         val updatedTask = Task(name, cost, dueDate, existingTask.displayOrder)
@@ -65,6 +68,12 @@ class TaskServiceImpl(private val repository: TaskRepository) : TaskService {
 
         if (exists) {
             throw AlreadyExistsException("A task with name $name already exists")
+        }
+    }
+
+    fun validateIfDueDateIsInThePast(date: LocalDate) {
+        if (date.isBefore(LocalDate.now())) {
+            throw PastDueDateException("A task cannot have a due date in the past")
         }
     }
 }
