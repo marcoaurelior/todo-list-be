@@ -6,12 +6,12 @@ Java 21, Maven como gerenciador de dependências e banco de dados PostgreSQL rod
 
 ## Requisitos
 
-Para executar esse projeto você precisa ter as seguintes ferramentas pré-instaladas:
+Para executar esse projeto, você precisa ter as seguintes ferramentas pré-instaladas:
 
-* Java (JDK 21)
+* Java (versão JDK 21)
 * Maven
 * Docker e Docker Compose
-* IntelliJ IDEA (ou outro editor compatível)
+* IntelliJ IDEA
 * Git
 
 ## Como executar
