@@ -23,7 +23,7 @@ class SecurityConfig {
     fun corsConfigurationSource(): CorsConfigurationSource {
         val corsConfiguration = CorsConfiguration()
         corsConfiguration.allowedOrigins = listOf("*")
-        corsConfiguration.allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "OPTIONS")
+        corsConfiguration.allowedMethods = listOf("GET", "POST", "PUT", "DELETE")
         corsConfiguration.allowedHeaders = listOf("*")
 
         val source = UrlBasedCorsConfigurationSource()
