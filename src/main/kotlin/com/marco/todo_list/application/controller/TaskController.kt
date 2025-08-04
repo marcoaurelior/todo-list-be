@@ -1,7 +1,7 @@
 package com.marco.todo_list.application.controller
 
 import com.marco.todo_list.application.controller.dto.task.request.CreateTaskRequest
-import com.marco.todo_list.application.controller.dto.task.request.UpdateAllTasksRequest
+import com.marco.todo_list.application.controller.dto.task.request.UpdateAllTasksOrderRequest
 import com.marco.todo_list.application.controller.dto.task.request.UpdateTaskRequest
 import com.marco.todo_list.application.controller.dto.task.response.TasksResponse
 import com.marco.todo_list.application.service.TaskService
@@ -54,7 +54,7 @@ class TaskController(
 
     @PutMapping()
     fun updateAllDisplayOrder(
-        @RequestBody @Valid request: List<UpdateAllTasksRequest>
+        @RequestBody @Valid request: List<UpdateAllTasksOrderRequest>
     ): List<TasksResponse> {
         val tasksToUpdate = request.map { TaskOrder(it.id, it.displayOrder) }
         val updatedTasks = taskService.updateAllDisplayOrder(tasksToUpdate)
