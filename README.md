@@ -11,7 +11,6 @@ Para executar esse projeto, você precisa ter as seguintes ferramentas pré-inst
 * Java (versão JDK 21)
 * Maven
 * Docker e Docker Compose
-* IntelliJ IDEA
 * Git
 
 ## Como executar
@@ -26,13 +25,19 @@ Com o Docker em execução, suba o banco de dados PostgreSQL:
 
     docker-compose up
 
-3 - Executando os testes
+3 - Execute a aplicação
+
+Com o banco em execução, rode a aplicação:
+
+    ./mvnw spring-boot:run
+
+4 - Executando os testes
 
 Para compilar e rodar todos os testes de integração (com dados pré-carregados via data.sql), execute:
 
     mvn clean install
 
-3.1 - Se desejar pular os testes, utilize:
+4.1 - Se desejar pular os testes, utilize:
 
     mvn clean install -DskipTests
 
@@ -49,3 +54,7 @@ Isso compila e empacota o projeto sem executar os testes.
     src/main/resources/db/changelog/ – arquivos de changelog do Liquibase
 
     pom.xml – configurações de dependências e plugins
+
+5 - A documentação completa da API pode ser encontrada no **Swagger**:
+
+👉 [**Documentação da API no Swagger**](https://todo-list-be-production-5c1f.up.railway.app/swagger-ui/index.html)
