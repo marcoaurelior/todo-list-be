@@ -4,6 +4,7 @@ import io.swagger.v3.oas.models.servers.Server
 import org.springdoc.core.models.GroupedOpenApi
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.web.filter.ForwardedHeaderFilter
 
 @Configuration
 class SwaggerConfig {
@@ -27,5 +28,10 @@ class SwaggerConfig {
             .group("tasks")
             .pathsToMatch("/tasks/**")
             .build()
+    }
+
+    @Bean
+    fun forwardedHeaderFilter(): ForwardedHeaderFilter {
+        return ForwardedHeaderFilter()
     }
 }
